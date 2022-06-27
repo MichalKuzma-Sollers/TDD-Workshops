@@ -8,6 +8,6 @@ namespace TDD_Workshops
 {
     public interface IThresholdsChecker
     {
-        public DecisionLevel CheckThresholds();
+        public DecisionLevel CheckThresholds(ISet<DecisionLevel> availableDecisionLevels);
     }
 }

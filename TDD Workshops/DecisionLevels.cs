@@ -32,38 +32,20 @@ namespace TDD_Workshops
                 throw new WarningMessageException();
 
             double limitIncrease = (double)((proposedLimit - approvedLimit) / approvedLimit);
+            
+            if (limitIncrease >= 0.1)
+                return DecisionLevel.FourEyes;
 
             int proposedRatingIndex = ratingScale.IndexOf(proposedRating);
-            if (limitIncrease > 0.0 && limitIncrease <= 0.1
-                && (proposedRatingIndex < ratingScale.IndexOf("4-") || proposedRatingIndex > ratingScale.IndexOf("7+"))) 
+            bool proposedRatingBetween4mAnd7p = proposedRatingIndex >= ratingScale.IndexOf("4-") && proposedRatingIndex <= ratingScale.IndexOf("7+");
+            bool proposedRatingBetween3mAnd7p = proposedRatingIndex >= ratingScale.IndexOf("3-") && proposedRatingIndex <= ratingScale.IndexOf("7+");
+
+            if ((limitIncrease > 0.0 && !proposedRatingBetween4mAnd7p) || (limitIncrease <= 0.0 && !proposedRatingBetween3mAnd7p))
             {
                 return thresholdsChecker.CheckThresholds(new HashSet<DecisionLevel> { DecisionLevel.Ecc, DecisionLevel.FourEyes, DecisionLevel.IbcFig, DecisionLevel.SixEyes });
             }
 
-            if (limitIncrease <= 0.0 &&
-                (proposedRatingIndex < ratingScale.IndexOf("3-") || proposedRatingIndex > ratingScale.IndexOf("7+")))
-            {
-                return thresholdsChecker.CheckThresholds(new HashSet<DecisionLevel> { DecisionLevel.Ecc, DecisionLevel.FourEyes, DecisionLevel.IbcFig, DecisionLevel.SixEyes });
-            }
-
-            if (limitIncrease > 0.0 && limitIncrease <= 0.1
-                && (proposedRatingIndex >= ratingScale.IndexOf("4-") && proposedRatingIndex <= ratingScale.IndexOf("7+")))
-            {
-                return thresholdsChecker.CheckThresholds(new HashSet<DecisionLevel> { DecisionLevel.FourEyes, DecisionLevel.SixEyes });
-            }
-
-            if (limitIncrease <= 0.0 &&
-                (proposedRatingIndex >= ratingScale.IndexOf("3-") && proposedRatingIndex <= ratingScale.IndexOf("7+")))
-            {
-                return thresholdsChecker.CheckThresholds(new HashSet<DecisionLevel> { DecisionLevel.FourEyes, DecisionLevel.SixEyes });
-            }
-
-            if (limitIncrease > 0.1)
-            {
-                return DecisionLevel.FourEyes;
-            }
-
-            return null;
+            return thresholdsChecker.CheckThresholds(new HashSet<DecisionLevel> { DecisionLevel.FourEyes, DecisionLevel.SixEyes });
         }
     }
 }

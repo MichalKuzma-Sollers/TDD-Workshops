@@ -56,8 +56,8 @@ namespace TDD_Workshops.Tests
         [TestMethod]
         public void ShouldReturnSixEyesIfNewCustomer()
         {
-            Assert.AreEqual(decisionLevels.GetDecisionLevel(100.0, null, "3"), DecisionLevel.SixEyes);
-            Assert.AreEqual(decisionLevels.GetDecisionLevel(100.0, 0.0, "3"), DecisionLevel.SixEyes);
+            Assert.AreEqual(DecisionLevel.SixEyes, decisionLevels.GetDecisionLevel(100.0, null, "3"));
+            Assert.AreEqual(DecisionLevel.SixEyes, decisionLevels.GetDecisionLevel(100.0, 0.0, "3"));
         }
 
         [DataRow(150.0)]
@@ -65,7 +65,7 @@ namespace TDD_Workshops.Tests
         [DataTestMethod]
         public void ShouldReturnFourEyesIfIncreaseOver10p(double proposedLimit)
         {
-            Assert.AreEqual(decisionLevels.GetDecisionLevel(proposedLimit, 100.0, "4"), DecisionLevel.FourEyes);
+            Assert.AreEqual(DecisionLevel.FourEyes, decisionLevels.GetDecisionLevel(proposedLimit, 100.0, "4"));
         }
 
         [DataRow(109.0, "4-")]
